@@ -52,10 +52,10 @@ export class ConfigService {
       database: this.envConfig.DB_DATABASE,
       synchronize: true,
       logging: false,
-      /* ssl: {
+      ssl: {
         rejectUnauthorized: false
-      }, */
-      ssl: this.isProduction || this.isDevelopment,
+      },
+      /*  ssl: this.isProduction || this.isDevelopment, */
       entities: [
         this.isProduction || this.isDevelopment
           ? 'src/entities/*.ts'
