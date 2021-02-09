@@ -22,6 +22,18 @@ export class DepartmentService {
       .getMany();
   }
 
+
+
+  async getDepartmentByName(name: string) {
+    return await this.departmentRepository.createQueryBuilder()
+      .select(['department.name', 'department.key'])
+      .addSelect(['municipalitys.name', 'municipalitys.key'])
+      .leftJoin('department.municipalitys', 'municipalitys')
+      .where('department.name ILIKE :name', { name: `%${name}%` })
+      .orderBy('department.name', 'ASC')
+      .getMany();
+  }
+
   async createMunicipality(search: string) {
     const url = `https://www.datos.gov.co/resource/xdk5-pm3f.json`
     let data = {};

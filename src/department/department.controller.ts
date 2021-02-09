@@ -10,6 +10,11 @@ export class DepartmentController {
     return await this.departmentService.getAllDepartment();
   }
 
+  @Get('by')
+  async getDepartmentByName(@Query('name') name: string) {
+    return await this.departmentService.getDepartmentByName(name);
+  }
+
   // @Get('/generate')
   private async generateDepartmentMunicipality() {
     return await this.departmentService.generateDepartmentMunicipality();
