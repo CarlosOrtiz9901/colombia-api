@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { municipality } from '../entities/municipality';
 import { department } from '../entities/department';
+import { iif } from 'rxjs';
 const fetch = require('node-fetch');
 
 @Injectable()
@@ -32,6 +33,23 @@ export class DepartmentService {
       .where('department.name ILIKE :name', { name: `%${name}%` })
       .orderBy('department.name', 'ASC')
       .getMany();
+  }
+
+  async getMunicipalityByName(name: string) {
+    return await this.municipalityRepository.createQueryBuilder()
+      .select(['municipality.name', 'municipality.key'])
+      .where('municipality.name ILIKE :name', { name: `%${name}%` })
+      .getOne();
+  }
+
+  async updateMunicipality() {
+    const allMunicipality = await this.municipalityRepository.find();
+
+    for (const value of allMunicipality) {
+      let search = (value.name).normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      await this.municipalityRepository.update(value.id, { name: search })
+    }
+
   }
 
   async createMunicipality(search: string) {
