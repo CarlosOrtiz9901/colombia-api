@@ -5,13 +5,13 @@ import { DepartmentService } from './department.service';
 export class DepartmentController {
   constructor(private readonly departmentService: DepartmentService) { }
 
-  @Get('/get-all')
+  @Get()
   async getAllDepartment() {
     return await this.departmentService.getAllDepartment();
   }
 
-  //@Get('/generate')
-  private async generateDepartmentMunicipality() {
+  @Get('/generate')
+  async generateDepartmentMunicipality() {
     return await this.departmentService.generateDepartmentMunicipality();
   }
 
