@@ -10,8 +10,8 @@ export class DepartmentController {
     return await this.departmentService.getAllDepartment();
   }
 
-  @Get('/generate')
-  async generateDepartmentMunicipality() {
+  // @Get('/generate')
+  private async generateDepartmentMunicipality() {
     return await this.departmentService.generateDepartmentMunicipality();
   }
 
