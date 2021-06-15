@@ -45,12 +45,27 @@ export class DepartmentService {
 
   async updateMunicipality() {
     const allMunicipality = await this.municipalityRepository.find();
+    const allDepartment = await this.departmentRepository.find();
 
-    for (const value of allMunicipality) {
-      const search = value.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      await this.municipalityRepository.update(value.id, { name: search })
+    for (const value of allDepartment) {
+      const search = value.name
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+
+      console.log(value.id, value.name, search);
+
+      await this.departmentRepository.update(value.id, { name: search });
     }
 
+    for (const value of allMunicipality) {
+      const search = value.name
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+      await this.municipalityRepository.update(value.id, { name: search });
+    }
+    return { success: 'OK' };
   }
 
   async createMunicipality(search: string) {
