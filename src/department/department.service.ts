@@ -23,8 +23,6 @@ export class DepartmentService {
       .getMany();
   }
 
-
-
   async getDepartmentByName(name: string) {
     return await this.departmentRepository.createQueryBuilder()
       .select(['department.name', 'department.key'])
